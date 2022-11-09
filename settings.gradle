@@ -10,3 +10,5 @@
 rootProject.name = 'inspectus-gradle-plugin'
 include 'development'
 include 'application'
+include 'sample-project-katalon'
+
