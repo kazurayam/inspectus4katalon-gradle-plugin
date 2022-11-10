@@ -11,15 +11,7 @@ gradlePlugin {
     plugins {
         inspectusPlugin {
             id = 'com.kazurayam.inspectus-gradle-plugin'
-            implementationClass = 'com.kazurayam.inspectus.gradle.DispatchPlugin'
-        }
-        inspectus4katalonPlugin {
-            id = 'com.kazurayam.inspectus4katalon-gradle-plugin'
-            implementationClass = 'com.kazurayam.inspectus.gradle.KatalonDispatchPlugin'
-        }
-        greetingPlugin {
-            id = 'com.kazurayam.greeting-gradle-plugin'
-            implementationClass = 'com.kazurayam.inspectus.gradle.GreetingPlugin'
+            implementationClass = 'com.kazurayam.inspectus.gradle.KatalonDriversPlugin'
         }
     }
 }
