@@ -37,3 +37,8 @@ Drivers/
 
 Provided with those jar files located in the `Drivers` directory, you can start developing codes for `Visual Inspection`.
 
+
+
+[Publishing Plugins to the Gradle Plugin Portal](https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html)
+
+[Gradle Plugin を公開する (Gradle Plugin Portal)](https://qiita.com/irgaly/items/be46b93df477df668ab7)
