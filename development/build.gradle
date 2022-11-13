@@ -2,123 +2,21 @@ plugins {
     id 'groovy'
     id 'java-gradle-plugin'
     id 'maven-publish'
+    id 'signing'
 }
 
 group 'com.kazurayam'
-version '0.1.0'
-
-gradlePlugin {
-    plugins {
-        inspectusPlugin {
-            id = 'com.kazurayam.inspectus-gradle-plugin'
-            implementationClass = 'com.kazurayam.inspectus.gradle.KatalonDriversPlugin'
-        }
-    }
-}
+version '0.1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
-def functionalTest = sourceSets.create("functionalTest")
-def functionalTestTask = tasks.register("functionalTest", Test) {
-    description = "Runs the functional tests."
-    group = "verification"
-    testClassesDirs = functionalTest.output.classesDirs
-    classpath = functionalTest.runtimeClasspath
-    mustRunAfter(tasks.named('test'))
-}
-
-tasks.named('check') {
-    dependsOn(functionalTestTask)
-}
-
-gradlePlugin {
-    // configure the `java-gradle-plugin` so that it looks at the `sourceSets.functionalTest`
-    // to find the tests for the custom plugin.
-    testSourceSets(sourceSets.functionalTest)
-    // This makes `org.gradle.testkit.runner.GradleRunner` class available to the
-    // functionalTest classes.
-}
-
 dependencies {
-    gradleApi()
-    localGroovy()
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
-    functionalTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
-    functionalTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    implementation 'org.apache.groovy:groovy:4.0.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
-
-test {
-    useJUnitPlatform()
-}
-
-
-
-
-
-
-
-
-
-//---------------------------------------------------------------------
-// studying ["Developing Custom Gradle Plugin"](https://docs.gradle.org/current/userguide/custom_plugins.html)
-
-interface GreetingPluginExtension {
-    Property<String> getMessage()
-    Property<String> getGreeter()
-}
-class GreetingPlugin implements Plugin<Project> {
-    void apply(Project project) {
-        def extension = project.extensions.create('greeting', GreetingPluginExtension)
-        project.task('hello') {
-            doLast {
-                println "${extension.message.get()} from ${extension.greeter.get()}"
-            }
-        }
-    }
-}
-
-apply plugin: GreetingPlugin
-
-// Configure the extension using a DSL block
-greeting {
-    message = 'Hi'
-    greeter = 'Gradle'
-}
-
-
-//---------------------------------------------------------------------
-
-abstract class GreetingToFileTask extends DefaultTask {
-
-    @OutputFile
-    abstract RegularFileProperty getDestination()
-
-    @TaskAction
-    def greet() {
-        def file = getDestination().get().asFile
-        file.parentFile.mkdirs()
-        file.write 'Hello!'
-    }
-}
-
-def greetingFile = objects.fileProperty()
-
-tasks.register('greet', GreetingToFileTask) {
-    destination = greetingFile
-}
-
-tasks.register('sayGreeting') {
-    dependsOn greet
-    doLast {
-        def file = greetingFile.get().asFile
-        println "${file.text} (file: ${file.name})"
-    }
-}
-
-greetingFile.set(layout.buildDirectory.file('hello.txt'))
 
 test {
     useJUnitPlatform()

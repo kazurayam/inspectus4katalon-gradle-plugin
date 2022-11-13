@@ -3,11 +3,15 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'com.kazurayam:inspectus-gradle-plugin:0.1.0-SNAPSHOT'
+        classpath 'com.kazurayam:inspectus4katalon-gradle-plugin:0.1.0-SNAPSHOT'
     }
 }
 
-apply plugin: 'com.kazurayam.inspectus-gradle-plugin'
+plugins {
+    id 'groovy'
+}
+
+apply plugin: 'com.kazurayam.inspectus4katalon-gradle-plugin'
 
 // type
-// $ ./gradlew hello
+// $ ./gradlew drivers

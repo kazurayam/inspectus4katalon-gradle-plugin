@@ -7,8 +7,6 @@
  * in the user manual at https://docs.gradle.org/7.4.2/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'inspectus-gradle-plugin'
+rootProject.name = 'inspectus4katalon-gradle-plugin'
 include 'development'
-include 'application'
-include 'sample-project-katalon'
 
