@@ -9,7 +9,8 @@ class KatalonDriversPlugin implements Plugin<Project> {
     void apply(Project project) {
         def myConf = project.configurations.create("myConf")
         project.dependencies({
-            add(myConf.getName(), [group: 'com.kazurayam', name: 'materialstore', version: "0.12.2"])
+            add(myConf.getName(), [group: 'com.kazurayam', name: 'inspectus', version: "0.5.4"])
+            add(myConf.getName(), [group: 'com.kazurayam', name: 'materialstore', version: "0.12.3"])
             add(myConf.getName(), [group: 'com.kazurayam', name: 'ExecutionProfilesLoader', version: '1.2.1'])
             add(myConf.getName(), [group: 'ru.yandex.qatools.ashot', name: 'ashot', version: '1.5.4'])
             add(myConf.getName(), [group: 'io.github.java-diff-utils', name: 'java-diff-utils', version: '4.11'])
@@ -33,6 +34,7 @@ class KatalonDriversPlugin implements Plugin<Project> {
                         .from(myConf)
                         .into("Drivers")
                         .include(
+                            "**/inspectus*.jar",
                             "**/materialstore*.jar",
                             "**/ExecutionProfilesLoader*.jar",
                             "**/ashot*.jar",
