@@ -7,6 +7,11 @@ class KatalonDriversPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
+        project.extensions.create("drivers", KatalonDriversPluginConfiguration)
+        project.task("showMaterialstoreVersion").doFirst {
+            println "materialstore version=${project.drivers.materialstoreVersion}"
+        }
+        //
         def myConf = project.configurations.create("myConf")
         project.dependencies({
             add(myConf.getName(), [group: 'com.kazurayam', name: 'inspectus', version: "0.5.5"])

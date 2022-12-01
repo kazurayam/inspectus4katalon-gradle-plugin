@@ -1,14 +1,14 @@
-# inspectus4katalon-gradle-plugin
+# A Gradle plugin: inspectus4katalon
 
 ## What is this?
 
-The `inspectus4katalon-gradle-plugin` is a Gradle plugin that enables a Katalon Studio project to use the [`inspectus`](https://github.com/kazurayam/inspectus) library. 
+The `inspectus4katalon` is a Gradle plugin that enables a Katalon Studio project to install several external libraries (jar files) into the `Drivers` directory of a Katalon project. The libraries include the [`inspectus`](https://github.com/kazurayam/inspectus), [`materialstore`](https://github.com/kazurayam/materialstore) and others.
 
 You would want to write the `<Katalon project directory>/build.gradle` like this:
 
 ```
 plugins {
-    id "inspectus4katalon-gradle-plugin"
+    id "inspectus4katalon"
 }
 ```
 
