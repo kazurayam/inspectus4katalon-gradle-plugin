@@ -1,17 +1,16 @@
 buildscript {
-    repositories {
-        mavenLocal()
-    }
+    // declare the output of the plugin development project
+    // as a dependency of this consumer project
     dependencies {
-        classpath 'com.kazurayam:inspectus4katalon:0.2.0-SNAPSHOT'
+        classpath 'com.kazurayam:inspectus4katalon'
     }
-}
-
-plugins {
-    id 'groovy'
 }
 
 apply plugin: 'com.kazurayam.inspectus4katalon'
+
+drivers {
+    materialstoreVersion = '0.12.4'
+}
 
 // type
 // $ ./gradlew drivers

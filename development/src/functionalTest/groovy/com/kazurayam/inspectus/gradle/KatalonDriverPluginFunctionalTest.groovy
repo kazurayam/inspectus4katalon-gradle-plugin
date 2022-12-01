@@ -19,6 +19,10 @@ class KatalonDriverPluginFunctionalTest extends Specification {
         """
     }
 
+    /**
+     * test if we can specify a value for the materialstoreVersion property
+     * @return
+     */
     def "canSuccessfullyConfigureMaterialstoreVersion"() {
         buildFile << """
            drivers {
@@ -35,5 +39,12 @@ class KatalonDriverPluginFunctionalTest extends Specification {
         then:
         result.output.contains("0.12.5")
         result.task(":showMaterialstoreVersion").outcome == SUCCESS
+    }
+
+    /**
+     *
+     */
+    def "check versions of external dependencies in the dependency tree"() {
+
     }
 }
