@@ -27,7 +27,7 @@ def functionalTestTask = tasks.register("functionalTest", Test) {
 }
 
 tasks.named('check') {
-    dependsOn(functionalTestTask)
+    dependsOn(test, functionalTestTask)
 }
 
 dependencies {

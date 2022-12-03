@@ -23,7 +23,7 @@ class KatalonDriverPluginFunctionalTest extends Specification {
      * test if we can specify a value for the materialstoreVersion property
      * @return
      */
-    def "canSuccessfullyConfigureMaterialstoreVersion"() {
+    def "test showImmediateDependencies task"() {
         buildFile << """
            drivers {
                inspectusVersion = "0.5.4"
@@ -32,17 +32,17 @@ class KatalonDriverPluginFunctionalTest extends Specification {
         when:
         def result = GradleRunner.create()
                 .withProjectDir(testProjectDir)
-                .withArguments('showInspectusVersion')
+                .withArguments('showImmediateDependencies')
                 .withPluginClasspath()
                 .build()
 
         then:
         result.output.contains("0.5.4")
-        result.task(":showInspectusVersion").outcome == SUCCESS
+        result.task(":showImmediateDependencies").outcome == SUCCESS
     }
 
     /*
-$ gradle dependencies --configuration myConf
+$ gradle dependencies --configuration Inspectus
 
 > Task :dependencies
 
@@ -50,7 +50,7 @@ $ gradle dependencies --configuration myConf
 Root project 'inspectus4katalon-gradle-plugin-application'
 ------------------------------------------------------------
 
-myConf
+Inspectus
 +--- com.kazurayam:inspectus:0.5.5
 +--- com.kazurayam:materialstore:0.12.5
 +--- com.kazurayam:ExecutionProfilesLoader:1.2.1
@@ -87,7 +87,7 @@ myConf
         when:
         def result = GradleRunner.create()
                 .withProjectDir(testProjectDir)
-                .withArguments('dependencies', '--configuration', 'myConf')
+                .withArguments('dependencies', '--configuration', 'Inspectus')
                 .withPluginClasspath()
                 .build()
 
