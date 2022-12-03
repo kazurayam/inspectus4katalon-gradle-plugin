@@ -35,6 +35,6 @@ jobs:
       - name: Run the Gradle test task
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: test --tests "*"
+          arguments: check
           build-root-directory: development
 
