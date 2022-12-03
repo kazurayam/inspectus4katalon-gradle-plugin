@@ -9,7 +9,7 @@ buildscript {
 apply plugin: 'com.kazurayam.inspectus4katalon'
 
 drivers {
-    materialstoreVersion = '0.12.4'
+    inspectusVersion = '0.6.0'
 }
 
 // type
