@@ -6,16 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class KatalonDriversPluginConfigurationTest {
 
     @Test
-    public void test_materialstoreVersion() {
+    public void test_inspectusVersion() {
         KatalonDriversPluginConfiguration config = new KatalonDriversPluginConfiguration();
-        assertEquals("0.12.4", config.materialstoreVersion);
+        assertEquals("0.6.0", config.inspectusVersion);
     }
 
     @Test
-    public void test_update_materialstoreVersion() {
+    public void test_update_inspectusVersion() {
         String version = "0.12.5";
         KatalonDriversPluginConfiguration config = new KatalonDriversPluginConfiguration();
-        config.materialstoreVersion = version;
-        assertEquals(version, config.materialstoreVersion);
+        config.inspectusVersion = version;
+        assertEquals(version, config.inspectusVersion);
     }
 }
