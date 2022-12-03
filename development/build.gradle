@@ -5,7 +5,6 @@ plugins {
     id "com.gradle.plugin-publish" version "1.1.0"
 }
 
-
 group = 'com.kazurayam'
 version = '0.2.0-SNAPSHOT'
 
@@ -14,12 +13,44 @@ java {
     withJavadocJar()
 }
 
+repositories {
+    mavenCentral()
+}
+
+def functionalTest = sourceSets.create("functionalTest")
+def functionalTestTask = tasks.register("functionalTest", Test) {
+    description = "Runs the functional tests."
+    group = "verification"
+    testClassesDirs = functionalTest.output.classesDirs
+    classpath = functionalTest.runtimeClasspath
+    mustRunAfter(tasks.named('test'))
+}
+
+tasks.named('check') {
+    dependsOn(test, functionalTestTask)
+}
+
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
+    testImplementation libs.junit.api
+    testRuntimeOnly libs.junit.engine
+    functionalTestImplementation platform(libs.spock.bom)
+    functionalTestImplementation libs.spock.core
 }
 
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+
 gradlePlugin {
+    // configure the `java-gradle-plugin` so that it looks at the `sourceSets.functionalTest`
+    // to find the tests for the custom plugin.
+    testSourceSets(sourceSets.functionalTest)
+    // This makes `org.gradle.testkit.runner.GradleRunner` class available to the
+    // functionalTest classes.
+
     plugins {
         inspectus4katalonPlugin {
             id = "com.kazurayam.inspectus4katalon"
@@ -38,4 +69,3 @@ pluginBundle {
     vcsUrl = "https://github.com/kazurayam/inspectus4katalon-gradle-plugin"
     tags = ["inspectus", "visual-inspection", "katalon-studio"]
 }
-

@@ -29,10 +29,12 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 7.4.2
-          arguments: :development:build
+          arguments: build
+          build-root-directory: development
 
       - name: Run the Gradle test task
-        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        uses: gradle/gradle-build-action@v2
         with:
-          arguments: :development:test --tests "*"
+          arguments: check
+          build-root-directory: development
 
