@@ -13,12 +13,18 @@ class KatalonDriversPlugin implements Plugin<Project> {
 
         project.extensions.create("drivers", KatalonDriversPluginConfiguration)
 
+        /*
+         * add the "showImmediateDependencies" task
+         */
         project.task("showImmediateDependencies").doFirst {
             println "com.kazurayam:inspectus:${project.drivers.inspectusVersion}"
             println "com.kazurayam:ExecutionProfileLoader:${project.drivers.ExecutionProfilesLoaderVersion}"
         }
 
-        project.task("showInspectusDependencies").doFirst {
+        /*
+         * add the "showAllDependenciesInInspectusConfiguration" task
+         */
+        project.task("showAllDependenciesInInspectusConfiguration").doFirst {
             project.configurations.each { conf ->
                 println "${conf} dependencies:"
                 //println "conf.isCanBeResolved()=${conf.isCanBeResolved()}"
@@ -51,10 +57,14 @@ class KatalonDriversPlugin implements Plugin<Project> {
             }
         }
 
-        /**
-         * Declare the configuration "Inspectus".
-         * The Inspectus configuration will include the inspectus library and
-         * the other transient dependencies.
+        /*
+         * Add a new configuration named "Inspectus".
+         * We will declare the following jars in the Inspectus configuration
+         * 1. inspectus
+         * 2. ExecutionProfilesLoader
+         *
+         * Consequently Gradle will automatically resolve all the transient dependencies in
+         * the Inspectus configuration.
          */
         def conf = project.configurations.create("Inspectus")
         project.dependencies({
@@ -63,32 +73,30 @@ class KatalonDriversPlugin implements Plugin<Project> {
             add(conf.getName(), [group: 'com.kazurayam', name: 'ExecutionProfilesLoader',
                                  version: "${project.drivers.ExecutionProfilesLoaderVersion}"])
         })
+
         project.repositories({
             mavenCentral()
             mavenLocal()
         })
+
+        /*
+         * add the "drivers" task
+         */
         project.task("drivers") {
             String AUTO_IMPORTED_JAR_PREFIX = "AUTOIMPORTED_"
             doFirst {
                 project.delete project.fileTree("Drivers").matching {
                     include("**/" + AUTO_IMPORTED_JAR_PREFIX + "*")
                 }
-
-                /*
-                project.dependencies({
-                    add(conf.getName(), [group: 'com.kazurayam', name: 'materialstore', version: "0.12.5"])
-                    add(conf.getName(), [group: 'ru.yandex.qatools.ashot', name: 'ashot', version: '1.5.4'])
-                    add(conf.getName(), [group: 'io.github.java-diff-utils', name: 'java-diff-utils', version: '4.11'])
-                    add(conf.getName(), [group: 'org.jsoup', name: 'jsoup', version: '1.14.3'])
-                    add(conf.getName(), [group: 'org.freemarker', name: 'freemarker', version: "2.3.31"])
-                })
-
-                 */
             }
             doLast {
                 /**
-                 * copy the jars are required to use the inspectus library AND
-                 * are NOT bundled in Katalon Studio's ver 8.x binary distribution.
+                 * copy the jars that are
+                 * - required to use the inspectus library AND
+                 * - are NOT bundled in Katalon Studio's ver 8.x binary distribution.
+                 *
+                 * The exact versions of dependencies will be automatically
+                 * resolved by Gradle.
                  */
                 project.copy { copySpec ->
                     copySpec
