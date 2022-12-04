@@ -1,5 +1,3 @@
-rootProject.name = 'inspectus4katalon-gradle-plugin-application'
-
 // include the build of the plugin development project
 includeBuild("../development") {
     dependencySubstitution {
