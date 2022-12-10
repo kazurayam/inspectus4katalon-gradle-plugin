@@ -1,8 +1,6 @@
--   back to the [repository](https://github.com/kazurayam/)
+-   back to the [repository](https://github.com/kazurayam/inspectus4katalon-gradle-plugin)
 
-# Gradle plugin: inspectus4katalon
-
-## What is this?
+# inspectus4katalon, a Gradle plugin
 
 The `inspectus4katalon` is a Gradle plugin that enables a [Katalon Studio](https://katalon.com/katalon-studio) project to install several external libraries (jar files) into the `Drivers` directory of a Katalon project. The libraries include the [`inspectus`](https://github.com/kazurayam/inspectus), [`materialstore`](https://github.com/kazurayam/materialstore) and others.
 
