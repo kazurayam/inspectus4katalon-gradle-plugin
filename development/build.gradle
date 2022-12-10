@@ -1,7 +1,7 @@
 plugins {
     id 'groovy'
-    id 'java-gradle-plugin'
-    id 'maven-publish'
+    //id 'java-gradle-plugin'
+    //id 'maven-publish'
     id 'signing'
     id "com.gradle.plugin-publish" version "1.1.0"
 }
@@ -54,8 +54,6 @@ gradlePlugin {
     // This makes `org.gradle.testkit.runner.GradleRunner` class available to the
     // functionalTest classes.
 
-    website = 'https://kazurayam.github.io/inspectus4katalon-gradle-plugin/'
-    vcsUrl = 'https://github.com/kazurayam/inspectus4katalon-gradle-plugin'
     plugins {
         inspectus4katalon {
             id = "com.kazurayam.inspectus4katalon"
@@ -70,16 +68,20 @@ gradlePlugin {
 
 pluginBundle {
     // information displayed in the Gradle Plugin Portal
-    website = "https://github.com/kazurayam/inspectus4katalon-gradle-plugin"
-    vcsUrl = "https://github.com/kazurayam/inspectus4katalon-gradle-plugin"
+    website = 'https://kazurayam.github.io/inspectus4katalon-gradle-plugin/'
+    vcsUrl = 'https://github.com/kazurayam/inspectus4katalon-gradle-plugin'
     tags = ["inspectus", "visual-inspection", "katalon-studio"]
 }
 
 publishing {
-    publications {
-        inspectus4katalon(MavenPublication) {
-            artifact sourcesJar
-            artifact javadocJar
+    repositories {
+        maven {
+            name = "gpr"
+            url = uri("https://maven.pkg.github.com/kazurayam/inspectus")
+            credentials {
+                username = project.findProperty("gpr.user")
+                password = project.findProperty("gpr.key")
+            }
         }
     }
 }
