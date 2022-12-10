@@ -2,6 +2,8 @@
 
 # inspectus4katalon, a Gradle plugin
 
+published at [Gradle plugin portal](https://plugins.gradle.org/plugin/com.kazurayam.inspectus4katalon)
+
 The `inspectus4katalon` is a Gradle plugin that enables a [Katalon Studio](https://katalon.com/katalon-studio) project to install several external libraries (jar files) into the `Drivers` directory of a Katalon project. The libraries include the [`inspectus`](https://github.com/kazurayam/inspectus), [`materialstore`](https://github.com/kazurayam/materialstore) and others.
 
 You would want to write the `<Katalon project directory>/build.gradle` like this:
