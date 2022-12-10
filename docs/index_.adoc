@@ -1,0 +1,6 @@
+* back to the link:https://github.com/kazurayam/[repository]
+
+= inspectus4katalon Gradle plugin
+
+
+(TO BE WRITTEN)

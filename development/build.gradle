@@ -54,6 +54,8 @@ gradlePlugin {
     // This makes `org.gradle.testkit.runner.GradleRunner` class available to the
     // functionalTest classes.
 
+    website = 'https://kazurayam.github.io/inspectus4katalon-gradle-plugin/'
+    vcsUrl = 'https://github.com/kazurayam/inspectus4katalon-gradle-plugin'
     plugins {
         inspectus4katalon {
             id = "com.kazurayam.inspectus4katalon"
