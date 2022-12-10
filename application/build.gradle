@@ -1,6 +1,7 @@
 buildscript {
     // declare the output of the plugin development project
-    // as a dependency of this consumer project
+    // as a dependency of this consumer project.
+    // the classpath is updated by the code in the application/settings.gradle file
     dependencies {
         classpath 'com.kazurayam:inspectus4katalon'
     }
