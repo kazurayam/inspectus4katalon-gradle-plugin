@@ -1,0 +1,35 @@
+.gradle/
+.idea/
+.settings/
+bin/
+build/
+Checkpoints/
+Data Files/
+Drivers/
+
+! gradle/
+
+Include/
+Keywords/
+Libs
+Object Repository/
+Plugins/
+Profiles/
+Reports/
+Scripts/
+settings/
+store/
+store-backup/
+Test Cases/
+Test Listeners/
+Test Suites/
+.classpath
+
+!build.gradle
+
+console.properties
+
+!gradlew
+!gradlew.bat
+!rehearsal.prj
+!settings.gradle
