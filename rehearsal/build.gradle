@@ -9,9 +9,10 @@ buildscript {
 
 apply plugin: 'com.kazurayam.inspectus4katalon'
 
-drivers {
-    inspectusVersion = '0.6.0'
+inspectus4katalon{
+    inspectusVersion = '0.7.5'
     ExecutionProfilesLoaderVersion = '1.2.1'
+    sampleProjectVersion = '0.3.1'
 }
 
 // type
