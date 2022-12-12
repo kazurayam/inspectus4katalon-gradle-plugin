@@ -2,9 +2,12 @@ package com.kazurayam.inspectus.gradle
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.ModuleVersionIdentifier
 import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.api.artifacts.ResolvedModuleVersion
-import org.gradle.api.artifacts.ModuleVersionIdentifier
+
+import java.nio.file.Files
+import java.nio.file.Paths
 
 class KatalonDriversPlugin implements Plugin<Project> {
 
@@ -103,19 +106,76 @@ class KatalonDriversPlugin implements Plugin<Project> {
                         .from(conf)
                         .into("Drivers")
                             .include(
-                            "**/inspectus*.jar",
-                            "**/materialstore*.jar",
-                            "**/ExecutionProfilesLoader*.jar",
-                            "**/ashot*.jar",
-                            "**/jsoup*.jar",
-                            "**/java-diff-utils*.jar",
-                            "**/freemarker*.jar"
+                                    "**/inspectus*.jar",
+                                    "**/materialstore*.jar",
+                                    "**/commons-csv*.jar",
+                                    "**/ExecutionProfilesLoader*.jar",
+                                    "**/ashot*.jar",
+                                    "**/jsoup*.jar",
+                                    "**/java-diff-utils*.jar",
+                                    "**/freemarker*.jar"
                         )
                         .rename({ s ->
                             "${AUTO_IMPORTED_JAR_PREFIX}${s}"
                         })
                 }
                 //println("Ya! I am the drivers task!")
+            }
+        }
+
+
+
+
+        /*
+         * add "deploy-visual-inspection-sample-for-katalon" task
+         */
+        project.task("deploy-visual-inspection-sample-for-katalon") {
+            String projectName = "inspectus4katalon-sample-project"
+            String src = "https://github.com/kazurayam/${projectName}/archive/refs/tags/${project.drivers.sampleProjectVersion}.zip"
+            String workDir = "${project.buildDir}/tmp"
+            String destFile = "${workDir}/sampleProject.zip"
+            String sampleProjDir = "${workDir}/${projectName}-${project.drivers.sampleProjectVersion}"
+            doFirst {
+                // download the zip file of the sample project, unzip it
+                URL url = new URL(src)
+                File zipFile = new File(destFile)
+                if (zipFile.exists()) {
+                    println "file $destFile already exists, skipping download"
+                } else {
+                    Files.createDirectories(Paths.get("$workDir"))
+                    println "Downloading $url into $destFile"
+                    url.withInputStream { i -> zipFile.withOutputStream { it << i } }
+                }
+                project.copy {  // unzip it to a directory
+                    from project.zipTree(zipFile)
+                    into new File("$workDir")
+                }
+            }
+            doLast {
+                // deploy the files
+                project.copy {
+                    from new File("$sampleProjDir")
+                    into "."
+                    exclude ".classpath"
+                    exclude ".gitignore"
+                    exclude ".project"
+                    exclude "build.gradle"
+                    exclude "gradlew"
+                    exclude "gradlew.bat"
+                    exclude "*.prj"
+                    exclude "settings.gradle"
+                    exclude "store/"
+                    exclude "store-backup/"
+                    exclude "settings/"
+                    exclude "Profiles/default.glbl"
+                    //
+                    include "Include/data/**/*"
+                    include "Profiles/**/*"
+                    include "Scripts/**/*"
+                    include "Test Cases/**/*"
+                    eachFile { println "... " + it.getRelativePath() }
+                }
+                println "deployed the sample project v${project.drivers.sampleProjectVersion}"
             }
         }
     }

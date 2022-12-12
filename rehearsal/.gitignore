@@ -7,7 +7,7 @@ Checkpoints/
 Data Files/
 Drivers/
 
-! gradle/
+!gradle/
 
 Include/
 Keywords/
@@ -24,6 +24,10 @@ Test Cases/
 Test Listeners/
 Test Suites/
 .classpath
+
+!.gitignore
+
+.project
 
 !build.gradle
 

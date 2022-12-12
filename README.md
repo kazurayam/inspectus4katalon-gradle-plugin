@@ -4,27 +4,35 @@
 
 This is a Gradle plugin which is supposed to be in a Katalon Studio project. 
 
-You can find a sample Katalon Studio project that utilizes this custom plugin:
+
+## Sample project that uses this Gradle plugin
+
+You can find the GitHub of the sample Katalon Studio project that utilizes this custom plugin:
 
 - [inspectus4katalon-sample-project](https://github.com/kazurayam/inspectus4katalon-sample-project)
 
-How to use this?
+
+## How to use this Gradle plugin?
+
+This plugin is made public at the Gradle Plugin Portal at 
+
+- https://plugins.gradle.org/plugin/com.kazurayam.inspectus4katalon
+
 
 You want to write in the `build.gradle` file in your Katalon Studio project:
 
 ```
 plugins {
-    id 'com.kazurayam.inspectus4katalon'
+    id 'com.kazurayam.inspectus4katalon' version '0.2.2'
 }
 ```
-
-That's all.
 
 This custom Gradle plugin adds the following tasks in to the Gradle project.
 
 1. `drivers` task
-2. `showImmediateDependencies` task
-3. `showAllDependenciesInInspectus` task
+2. `deploy-visual-inspection-sample-for-katalon` task
+3. `showImmediateDependencies` task
+4. `showAllDependenciesInInspectus` task
 
 ### `drivers` task
 
@@ -54,6 +62,10 @@ Drivers
 ```
 
 These jars are required to run Katalon Studio test cases that uses the `inspectus` library. These jars are downloaded from the Maven Central repository. These jars are NOT bundled in the Katalon Studio's binary distribution, therefore this custom Gradle plugin supplements the missing jars into the `Drivers` folder while downloading them from the public repository. You do not have to mind which jars & which version to download --- this plugin will take care.
+
+### `deploy-visual-inspection-sample-for-katalon` task
+
+TO AUTHOR YET
 
 ### `showImmediateDependencies` task
 
