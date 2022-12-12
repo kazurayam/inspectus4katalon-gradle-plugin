@@ -2,12 +2,12 @@ plugins {
     id 'groovy'
     //id 'java-gradle-plugin'
     //id 'maven-publish'
-    id 'signing'
+    //id 'signing'
     id "com.gradle.plugin-publish" version "1.1.0"
 }
 
 group = 'com.kazurayam'
-version = '0.2.2'
+version = '0.3.0'
 
 ext {
     isReleaseVersion = !version.endsWith("SNAPSHOT")
@@ -70,14 +70,14 @@ pluginBundle {
     // information displayed in the Gradle Plugin Portal
     website = 'https://kazurayam.github.io/inspectus4katalon-gradle-plugin/'
     vcsUrl = 'https://github.com/kazurayam/inspectus4katalon-gradle-plugin'
-    tags = ["inspectus", "visual-inspection", "katalon-studio"]
+    tags = ["inspectus", "visual-inspection", "katalon-studio", "materialstore"]
 }
 
 publishing {
     repositories {
         maven {
             name = "gpr"
-            url = uri("https://maven.pkg.github.com/kazurayam/inspectus")
+            url = uri("https://maven.pkg.github.com/kazurayam/inspectus4katalon-gradle-plugin")
             credentials {
                 username = project.findProperty("gpr.user")
                 password = project.findProperty("gpr.key")
@@ -87,6 +87,8 @@ publishing {
 }
 
 // I do not want to sign the SNAPSHOT
+/*
 tasks.withType(Sign) {
     onlyIf { isReleaseVersion }
 }
+ */
