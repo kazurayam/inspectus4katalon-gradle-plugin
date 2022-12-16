@@ -1,3 +1,7 @@
+plugins {
+    id("com.gradle.enterprise") version("3.9")
+}
+
 rootProject.name = "inspectus4katalon"
 
 dependencyResolutionManagement {
@@ -10,6 +14,16 @@ dependencyResolutionManagement {
             version('spock', '2.3-groovy-3.0')
             library('spock-core', 'org.spockframework', 'spock-core').versionRef('spock')
             library('spock-bom', 'org.spockframework', 'spock-bom').versionRef('spock')
+        }
+    }
+}
+
+gradleEnterprise {
+    if (System.getenv("CI") != null) {
+        buildScan {
+            publishAlways()
+            termsOfServiceUrl = "https://gradle.com/terms-of-service"
+            termsOfServiceAgree = "yes"
         }
     }
 }

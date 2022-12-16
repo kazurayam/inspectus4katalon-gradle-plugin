@@ -1,7 +1,6 @@
 plugins {
     id 'groovy'
     id "com.gradle.plugin-publish" version "1.1.0"
-    id("com.gradle.enterprise") version("3.9")
 }
 
 group = 'com.kazurayam'
@@ -84,12 +83,3 @@ publishing {
     }
 }
 
-gradleEnterprise {
-    if (System.getenv("CI") != null) {
-        buildScan {
-            publishAlways()
-            termsOfServiceUrl = "https://gradle.com/terms-of-service"
-            termsOfServiceAgree = "yes"
-        }
-    }
-}
