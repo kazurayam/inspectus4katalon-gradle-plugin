@@ -6,6 +6,6 @@ public class KatalonDriversPluginConfiguration {
 
     public String ExecutionProfilesLoaderVersion = "1.2.1";
 
-    public String sampleProjectVersion = "0.3.2";
+    public String sampleProjectVersion = "0.3.3";
 
 }
