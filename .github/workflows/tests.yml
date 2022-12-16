@@ -21,6 +21,13 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           architecture: x64
+      - name: Restore gradle.properties
+        env:
+          GP: ${{ secrets.GRADLE_PROPERTIES }}
+        shell: bash
+        run: |
+          mkdir -p ~/.gradle/
+          echo "${GP}" > ~/.gradle/gradle.properties
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
