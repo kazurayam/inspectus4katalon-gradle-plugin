@@ -17,14 +17,6 @@ class KatalonDriversPlugin implements Plugin<Project> {
         project.extensions.create("inspectus4katalon", KatalonDriversPluginConfiguration)
 
         /*
-         * add the "showImmediateDependencies" task
-         */
-        project.task("showImmediateDependencies").doFirst {
-            println "com.kazurayam:inspectus:${project.inspectus4katalon.inspectusVersion}"
-            println "com.kazurayam:ExecutionProfileLoader:${project.inspectus4katalon.ExecutionProfilesLoaderVersion}"
-        }
-
-        /*
          * Add a new configuration named "Inspectus".
          * We will declare the following jars in the Inspectus configuration
          * 1. inspectus

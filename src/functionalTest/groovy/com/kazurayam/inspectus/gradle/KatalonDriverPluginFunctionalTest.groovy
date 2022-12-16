@@ -19,30 +19,6 @@ class KatalonDriverPluginFunctionalTest extends Specification {
         """
     }
 
-    /**
-     * test if we can specify a value for the materialstoreVersion property
-     * @return
-     */
-    def "test showImmediateDependencies task"() {
-        buildFile << """
-           inspectus4katalon {
-               inspectusVersion = "0.5.5"
-           }
-        """
-        when:
-        def result = GradleRunner.create()
-                .withProjectDir(testProjectDir)
-                .withArguments('showImmediateDependencies')
-                .withPluginClasspath()
-                .build()
-
-        then:
-        result.output.contains("1.2.1")   // ExecutionProfilesLoader:1.2.1
-        result.task(":showImmediateDependencies").outcome == SUCCESS
-    }
-
-
-
     /*
 $ gradle dependencies --configuration Inspectus
 
