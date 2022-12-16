@@ -25,42 +25,6 @@ class KatalonDriversPlugin implements Plugin<Project> {
         }
 
         /*
-         * add the "showAllDependenciesInInspectusConfiguration" task
-         */
-        project.task("showAllDependenciesInInspectusConfiguration").doFirst {
-            project.configurations.each { conf ->
-                println "${conf} dependencies:"
-                //println "conf.isCanBeResolved()=${conf.isCanBeResolved()}"
-                if (conf.isCanBeResolved()) {
-                    Set<ResolvedArtifact> resolvedArtifactSet =
-                            conf.getResolvedConfiguration().getResolvedArtifacts()
-                    List<ResolvedArtifact> resolvedArtifactList =
-                            new ArrayList<>(resolvedArtifactSet)
-                    // sort the list by the name of ResolvedArtifact
-                    Collections.sort(resolvedArtifactList, new Comparator<ResolvedArtifact>() {
-                        @Override
-                        public int compare(ResolvedArtifact ra1, ResolvedArtifact ra2) {
-                            return ra1.getName().compareTo(ra2.getName())
-                        }
-                    })
-                    resolvedArtifactList.each { ra ->
-                        ResolvedModuleVersion rmv = ra.getModuleVersion()
-                        ModuleVersionIdentifier mvi = rmv.getId()
-                        //println "${ra}"
-                        //println "  ra.getType()=${ra.getType()}"
-                        StringBuilder sb = new StringBuilder()
-                        sb.append("name:'${mvi.getName()}'")
-                        sb.append(", ")
-                        sb.append("group:'${mvi.getGroup()}'")
-                        sb.append(", ")
-                        sb.append("version:'${mvi.getVersion()}'")
-                        println sb.toString()
-                    }
-                }
-            }
-        }
-
-        /*
          * Add a new configuration named "Inspectus".
          * We will declare the following jars in the Inspectus configuration
          * 1. inspectus
