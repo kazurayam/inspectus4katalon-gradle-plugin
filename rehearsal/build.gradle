@@ -9,10 +9,13 @@ buildscript {
 
 apply plugin: 'com.kazurayam.inspectus4katalon'
 
-drivers {
-    inspectusVersion = '0.6.0'
+/*
+inspectus4katalon {
+    inspectusVersion = '0.8.1'
     ExecutionProfilesLoaderVersion = '1.2.1'
+    sampleProjectVersion = '0.3.2'
 }
+*/
 
 // type
 // $ ./gradlew drivers

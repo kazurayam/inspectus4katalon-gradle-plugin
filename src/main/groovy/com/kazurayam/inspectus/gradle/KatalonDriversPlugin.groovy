@@ -2,11 +2,9 @@ package com.kazurayam.inspectus.gradle
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.ModuleVersionIdentifier
-import org.gradle.api.artifacts.ResolvedArtifact
-import org.gradle.api.artifacts.ResolvedModuleVersion
 
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 
 class KatalonDriversPlugin implements Plugin<Project> {
@@ -14,51 +12,7 @@ class KatalonDriversPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
 
-        project.extensions.create("drivers", KatalonDriversPluginConfiguration)
-
-        /*
-         * add the "showImmediateDependencies" task
-         */
-        project.task("showImmediateDependencies").doFirst {
-            println "com.kazurayam:inspectus:${project.drivers.inspectusVersion}"
-            println "com.kazurayam:ExecutionProfileLoader:${project.drivers.ExecutionProfilesLoaderVersion}"
-        }
-
-        /*
-         * add the "showAllDependenciesInInspectusConfiguration" task
-         */
-        project.task("showAllDependenciesInInspectusConfiguration").doFirst {
-            project.configurations.each { conf ->
-                println "${conf} dependencies:"
-                //println "conf.isCanBeResolved()=${conf.isCanBeResolved()}"
-                if (conf.isCanBeResolved()) {
-                    Set<ResolvedArtifact> resolvedArtifactSet =
-                            conf.getResolvedConfiguration().getResolvedArtifacts()
-                    List<ResolvedArtifact> resolvedArtifactList =
-                            new ArrayList<>(resolvedArtifactSet)
-                    // sort the list by the name of ResolvedArtifact
-                    Collections.sort(resolvedArtifactList, new Comparator<ResolvedArtifact>() {
-                        @Override
-                        public int compare(ResolvedArtifact ra1, ResolvedArtifact ra2) {
-                            return ra1.getName().compareTo(ra2.getName())
-                        }
-                    })
-                    resolvedArtifactList.each { ra ->
-                        ResolvedModuleVersion rmv = ra.getModuleVersion()
-                        ModuleVersionIdentifier mvi = rmv.getId()
-                        //println "${ra}"
-                        //println "  ra.getType()=${ra.getType()}"
-                        StringBuilder sb = new StringBuilder()
-                        sb.append("name:'${mvi.getName()}'")
-                        sb.append(", ")
-                        sb.append("group:'${mvi.getGroup()}'")
-                        sb.append(", ")
-                        sb.append("version:'${mvi.getVersion()}'")
-                        println sb.toString()
-                    }
-                }
-            }
-        }
+        project.extensions.create("inspectus4katalon", KatalonDriversPluginConfiguration)
 
         /*
          * Add a new configuration named "Inspectus".
@@ -70,16 +24,25 @@ class KatalonDriversPlugin implements Plugin<Project> {
          * the Inspectus configuration.
          */
         def conf = project.configurations.create("Inspectus")
-        project.dependencies({
-            add(conf.getName(), [group: 'com.kazurayam', name: 'inspectus',
-                                 version: "${project.drivers.inspectusVersion}"])
-            add(conf.getName(), [group: 'com.kazurayam', name: 'ExecutionProfilesLoader',
-                                 version: "${project.drivers.ExecutionProfilesLoaderVersion}"])
-        })
 
         project.repositories({
             mavenCentral()
             mavenLocal()
+        })
+
+        /**
+         * copy the jars that are
+         * - required to use the inspectus library AND
+         * - are NOT bundled in Katalon Studio's ver 8.x binary distribution.
+         *
+         * The exact versions of dependencies will be automatically
+         * resolved by Gradle.
+         */
+        project.dependencies({
+            add(conf.getName(), [group: 'com.kazurayam', name: 'inspectus',
+                                 version: "${project.inspectus4katalon.inspectusVersion}"])
+            add(conf.getName(), [group: 'com.kazurayam', name: 'ExecutionProfilesLoader',
+                                 version: "${project.inspectus4katalon.ExecutionProfilesLoaderVersion}"])
         })
 
         /*
@@ -93,14 +56,7 @@ class KatalonDriversPlugin implements Plugin<Project> {
                 }
             }
             doLast {
-                /**
-                 * copy the jars that are
-                 * - required to use the inspectus library AND
-                 * - are NOT bundled in Katalon Studio's ver 8.x binary distribution.
-                 *
-                 * The exact versions of dependencies will be automatically
-                 * resolved by Gradle.
-                 */
+
                 project.copy { copySpec ->
                     copySpec
                         .from(conf)
@@ -115,6 +71,7 @@ class KatalonDriversPlugin implements Plugin<Project> {
                                     "**/java-diff-utils*.jar",
                                     "**/freemarker*.jar"
                         )
+                        .eachFile({ fileCopyDetails -> println fileCopyDetails.getName()})
                         .rename({ s ->
                             "${AUTO_IMPORTED_JAR_PREFIX}${s}"
                         })
@@ -131,30 +88,30 @@ class KatalonDriversPlugin implements Plugin<Project> {
          */
         project.task("deploy-visual-inspection-sample-for-katalon") {
             String projectName = "inspectus4katalon-sample-project"
-            String src = "https://github.com/kazurayam/${projectName}/archive/refs/tags/${project.drivers.sampleProjectVersion}.zip"
-            String workDir = "${project.buildDir}/tmp"
-            String destFile = "${workDir}/sampleProject.zip"
-            String sampleProjDir = "${workDir}/${projectName}-${project.drivers.sampleProjectVersion}"
+            URL url = new URL("https://github.com/kazurayam/${projectName}/releases/download/${project.inspectus4katalon.sampleProjectVersion}/distributable.zip")
+            Path workDir = Paths.get("${project.buildDir}").resolve("tmp")
+            Path destFile = workDir.resolve("distributable.zip")
+            Path sampleProjDir = workDir.resolve("sampleProject")
             doFirst {
                 // download the zip file of the sample project, unzip it
-                URL url = new URL(src)
-                File zipFile = new File(destFile)
-                if (zipFile.exists()) {
-                    println "file $destFile already exists, skipping download"
-                } else {
-                    Files.createDirectories(Paths.get("$workDir"))
-                    println "Downloading $url into $destFile"
-                    url.withInputStream { i -> zipFile.withOutputStream { it << i } }
+                if (Files.exists(destFile)) {
+                    destFile.toFile().delete()
                 }
+                Files.createDirectories(workDir)
+                Files.createDirectories(sampleProjDir)
+                println "Downloading $url into $destFile"
+                url.withInputStream { i -> destFile.toFile().withOutputStream { it << i } }
+                //
                 project.copy {  // unzip it to a directory
-                    from project.zipTree(zipFile)
-                    into new File("$workDir")
+                    from project.zipTree(destFile.toFile())
+                    into sampleProjDir.toFile()
+                    //eachFile { println ">>> " + it.getRelativePath() }
                 }
             }
             doLast {
                 // deploy the files
                 project.copy {
-                    from new File("$sampleProjDir")
+                    from sampleProjDir.toFile()
                     into "."
                     exclude ".classpath"
                     exclude ".gitignore"
@@ -170,12 +127,13 @@ class KatalonDriversPlugin implements Plugin<Project> {
                     exclude "Profiles/default.glbl"
                     //
                     include "Include/data/**/*"
+                    include "Object Repository/CURA/**/*"
                     include "Profiles/**/*"
                     include "Scripts/**/*"
                     include "Test Cases/**/*"
                     eachFile { println "... " + it.getRelativePath() }
                 }
-                println "deployed the sample project v${project.drivers.sampleProjectVersion}"
+                println "deployed the sample project v${project.inspectus4katalon.sampleProjectVersion}"
             }
         }
     }
