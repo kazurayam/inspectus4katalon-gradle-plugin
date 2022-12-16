@@ -14,14 +14,14 @@ class KatalonDriversPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
 
-        project.extensions.create("drivers", KatalonDriversPluginConfiguration)
+        project.extensions.create("inspectus4katalon", KatalonDriversPluginConfiguration)
 
         /*
          * add the "showImmediateDependencies" task
          */
         project.task("showImmediateDependencies").doFirst {
-            println "com.kazurayam:inspectus:${project.drivers.inspectusVersion}"
-            println "com.kazurayam:ExecutionProfileLoader:${project.drivers.ExecutionProfilesLoaderVersion}"
+            println "com.kazurayam:inspectus:${project.inspectus4katalon.inspectusVersion}"
+            println "com.kazurayam:ExecutionProfileLoader:${project.inspectus4katalon.ExecutionProfilesLoaderVersion}"
         }
 
         /*
@@ -70,18 +70,11 @@ class KatalonDriversPlugin implements Plugin<Project> {
          * the Inspectus configuration.
          */
         def conf = project.configurations.create("Inspectus")
-        project.dependencies({
-            add(conf.getName(), [group: 'com.kazurayam', name: 'inspectus',
-                                 version: "${project.drivers.inspectusVersion}"])
-            add(conf.getName(), [group: 'com.kazurayam', name: 'ExecutionProfilesLoader',
-                                 version: "${project.drivers.ExecutionProfilesLoaderVersion}"])
-        })
 
         project.repositories({
             mavenCentral()
             mavenLocal()
         })
-
         /*
          * add the "drivers" task
          */
@@ -101,6 +94,13 @@ class KatalonDriversPlugin implements Plugin<Project> {
                  * The exact versions of dependencies will be automatically
                  * resolved by Gradle.
                  */
+                project.dependencies({
+                    add(conf.getName(), [group: 'com.kazurayam', name: 'inspectus',
+                                         version: "${project.inspectus4katalon.inspectusVersion}"])
+                    add(conf.getName(), [group: 'com.kazurayam', name: 'ExecutionProfilesLoader',
+                                         version: "${project.inspectus4katalon.ExecutionProfilesLoaderVersion}"])
+                })
+
                 project.copy { copySpec ->
                     copySpec
                         .from(conf)
@@ -115,6 +115,7 @@ class KatalonDriversPlugin implements Plugin<Project> {
                                     "**/java-diff-utils*.jar",
                                     "**/freemarker*.jar"
                         )
+                        .eachFile({ fileCopyDetails -> println fileCopyDetails.getName()})
                         .rename({ s ->
                             "${AUTO_IMPORTED_JAR_PREFIX}${s}"
                         })
@@ -131,21 +132,21 @@ class KatalonDriversPlugin implements Plugin<Project> {
          */
         project.task("deploy-visual-inspection-sample-for-katalon") {
             String projectName = "inspectus4katalon-sample-project"
-            String src = "https://github.com/kazurayam/${projectName}/archive/refs/tags/${project.drivers.sampleProjectVersion}.zip"
+            String src = "https://github.com/kazurayam/${projectName}/archive/refs/tags/${project.inspectus4katalon.sampleProjectVersion}.zip"
             String workDir = "${project.buildDir}/tmp"
             String destFile = "${workDir}/sampleProject.zip"
-            String sampleProjDir = "${workDir}/${projectName}-${project.drivers.sampleProjectVersion}"
+            String sampleProjDir = "${workDir}/${projectName}-${project.inspectus4katalon.sampleProjectVersion}"
             doFirst {
                 // download the zip file of the sample project, unzip it
                 URL url = new URL(src)
                 File zipFile = new File(destFile)
                 if (zipFile.exists()) {
-                    println "file $destFile already exists, skipping download"
-                } else {
-                    Files.createDirectories(Paths.get("$workDir"))
-                    println "Downloading $url into $destFile"
-                    url.withInputStream { i -> zipFile.withOutputStream { it << i } }
+                    zipFile.delete()
                 }
+                Files.createDirectories(Paths.get("$workDir"))
+                println "Downloading $url into $destFile"
+                url.withInputStream { i -> zipFile.withOutputStream { it << i } }
+                //
                 project.copy {  // unzip it to a directory
                     from project.zipTree(zipFile)
                     into new File("$workDir")
@@ -170,12 +171,13 @@ class KatalonDriversPlugin implements Plugin<Project> {
                     exclude "Profiles/default.glbl"
                     //
                     include "Include/data/**/*"
+                    include "Object Repository/CURA/**/*"
                     include "Profiles/**/*"
                     include "Scripts/**/*"
                     include "Test Cases/**/*"
                     eachFile { println "... " + it.getRelativePath() }
                 }
-                println "deployed the sample project v${project.drivers.sampleProjectVersion}"
+                println "deployed the sample project v${project.inspectus4katalon.sampleProjectVersion}"
             }
         }
     }

@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'com.kazurayam'
-version = '0.3.0'
+version = '0.3.2'
 
 ext {
     isReleaseVersion = !version.endsWith("SNAPSHOT")
@@ -69,7 +69,7 @@ gradlePlugin {
 pluginBundle {
     // information displayed in the Gradle Plugin Portal
     website = 'https://kazurayam.github.io/inspectus4katalon-gradle-plugin/'
-    vcsUrl = 'https://github.com/kazurayam/inspectus4katalon-gradle-plugin'
+    vcsUrl = 'https://github.com/kazurayam/inspectus4katalon-gradle-plugin/'
     tags = ["inspectus", "visual-inspection", "katalon-studio", "materialstore"]
 }
 

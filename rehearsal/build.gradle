@@ -9,10 +9,12 @@ buildscript {
 
 apply plugin: 'com.kazurayam.inspectus4katalon'
 
-inspectus4katalon{
-    inspectusVersion = '0.7.5'
+inspectus4katalon {
+    /*
+    inspectusVersion = '0.8.1'
     ExecutionProfilesLoaderVersion = '1.2.1'
-    sampleProjectVersion = '0.3.1'
+    sampleProjectVersion = '0.3.2'
+     */
 }
 
 // type
