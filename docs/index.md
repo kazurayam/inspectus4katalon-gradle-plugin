@@ -40,7 +40,11 @@ Provided with those jar files located in the `Drivers` directory, you can start 
 
 ## deploy-visual-inspection-sample-for-katalon task
 
-The plugin provides one more Gradle task which deploys a set of sample code that performs Visual Inspection practice.
+The plugin provides one more Gradle task which deploys a set of sample code that performs Visual Inspection practice. The sample is published at
+
+-   [inspectus4katalon-sample-project](https://github.com/kazurayam/inspectus4katalon-sample-project/releases)
+
+<!-- -->
 
     $ cd <Katalon project directory>
     $ gradle deploy-visual-inspection-sample-for-katalon

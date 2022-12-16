@@ -1,8 +1,5 @@
 plugins {
     id 'groovy'
-    //id 'java-gradle-plugin'
-    //id 'maven-publish'
-    //id 'signing'
     id "com.gradle.plugin-publish" version "1.1.0"
 }
 
@@ -85,10 +82,3 @@ publishing {
         }
     }
 }
-
-// I do not want to sign the SNAPSHOT
-/*
-tasks.withType(Sign) {
-    onlyIf { isReleaseVersion }
-}
- */
