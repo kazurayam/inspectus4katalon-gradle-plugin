@@ -1,6 +1,7 @@
 package com.kazurayam.inspectus.gradle
 
 import org.gradle.testkit.runner.GradleRunner
+import org.gradle.testkit.runner.internal.FeatureCheckBuildResult
 import spock.lang.Specification
 import spock.lang.TempDir
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
@@ -58,7 +59,7 @@ class KatalonDriverPluginFunctionalTest extends Specification {
         """
          */
         when:
-        def result = GradleRunner.create()
+        FeatureCheckBuildResult result = GradleRunner.create()
                 .withProjectDir(testProjectDir)
                 .withArguments('deploy-visual-inspection-sample-for-katalon')
                 .withPluginClasspath()
@@ -113,6 +114,7 @@ deployed the sample project v0.3.2
 BUILD SUCCESSFUL in 31s
 5 actionable tasks: 5 executed
          */
+        println ">>>result.getOutput()=" + result.getOutput()
         result.output.contains("Test Cases/CURA/main")
         result.output.contains("Test Cases/DuckDuckGo/main")
         result.output.contains("Test Cases/MyAdmin/main")

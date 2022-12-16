@@ -2,11 +2,9 @@ package com.kazurayam.inspectus.gradle
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.ModuleVersionIdentifier
-import org.gradle.api.artifacts.ResolvedArtifact
-import org.gradle.api.artifacts.ResolvedModuleVersion
 
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 
 class KatalonDriversPlugin implements Plugin<Project> {
@@ -31,6 +29,22 @@ class KatalonDriversPlugin implements Plugin<Project> {
             mavenCentral()
             mavenLocal()
         })
+
+        /**
+         * copy the jars that are
+         * - required to use the inspectus library AND
+         * - are NOT bundled in Katalon Studio's ver 8.x binary distribution.
+         *
+         * The exact versions of dependencies will be automatically
+         * resolved by Gradle.
+         */
+        project.dependencies({
+            add(conf.getName(), [group: 'com.kazurayam', name: 'inspectus',
+                                 version: "${project.inspectus4katalon.inspectusVersion}"])
+            add(conf.getName(), [group: 'com.kazurayam', name: 'ExecutionProfilesLoader',
+                                 version: "${project.inspectus4katalon.ExecutionProfilesLoaderVersion}"])
+        })
+
         /*
          * add the "drivers" task
          */
@@ -42,20 +56,6 @@ class KatalonDriversPlugin implements Plugin<Project> {
                 }
             }
             doLast {
-                /**
-                 * copy the jars that are
-                 * - required to use the inspectus library AND
-                 * - are NOT bundled in Katalon Studio's ver 8.x binary distribution.
-                 *
-                 * The exact versions of dependencies will be automatically
-                 * resolved by Gradle.
-                 */
-                project.dependencies({
-                    add(conf.getName(), [group: 'com.kazurayam', name: 'inspectus',
-                                         version: "${project.inspectus4katalon.inspectusVersion}"])
-                    add(conf.getName(), [group: 'com.kazurayam', name: 'ExecutionProfilesLoader',
-                                         version: "${project.inspectus4katalon.ExecutionProfilesLoaderVersion}"])
-                })
 
                 project.copy { copySpec ->
                     copySpec
@@ -88,30 +88,30 @@ class KatalonDriversPlugin implements Plugin<Project> {
          */
         project.task("deploy-visual-inspection-sample-for-katalon") {
             String projectName = "inspectus4katalon-sample-project"
-            String src = "https://github.com/kazurayam/${projectName}/archive/refs/tags/${project.inspectus4katalon.sampleProjectVersion}.zip"
-            String workDir = "${project.buildDir}/tmp"
-            String destFile = "${workDir}/sampleProject.zip"
-            String sampleProjDir = "${workDir}/${projectName}-${project.inspectus4katalon.sampleProjectVersion}"
+            URL url = new URL("https://github.com/kazurayam/${projectName}/releases/download/${project.inspectus4katalon.sampleProjectVersion}/distributable.zip")
+            Path workDir = Paths.get("${project.buildDir}").resolve("tmp")
+            Path destFile = workDir.resolve("distributable.zip")
+            Path sampleProjDir = workDir.resolve("sampleProject")
             doFirst {
                 // download the zip file of the sample project, unzip it
-                URL url = new URL(src)
-                File zipFile = new File(destFile)
-                if (zipFile.exists()) {
-                    zipFile.delete()
+                if (Files.exists(destFile)) {
+                    destFile.toFile().delete()
                 }
-                Files.createDirectories(Paths.get("$workDir"))
+                Files.createDirectories(workDir)
+                Files.createDirectories(sampleProjDir)
                 println "Downloading $url into $destFile"
-                url.withInputStream { i -> zipFile.withOutputStream { it << i } }
+                url.withInputStream { i -> destFile.toFile().withOutputStream { it << i } }
                 //
                 project.copy {  // unzip it to a directory
-                    from project.zipTree(zipFile)
-                    into new File("$workDir")
+                    from project.zipTree(destFile.toFile())
+                    into sampleProjDir.toFile()
+                    //eachFile { println ">>> " + it.getRelativePath() }
                 }
             }
             doLast {
                 // deploy the files
                 project.copy {
-                    from new File("$sampleProjDir")
+                    from sampleProjDir.toFile()
                     into "."
                     exclude ".classpath"
                     exclude ".gitignore"
