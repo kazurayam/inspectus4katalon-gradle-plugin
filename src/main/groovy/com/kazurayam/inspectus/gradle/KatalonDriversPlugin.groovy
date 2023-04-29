@@ -41,6 +41,8 @@ class KatalonDriversPlugin implements Plugin<Project> {
         project.dependencies({
             add(conf.getName(), [group: 'com.kazurayam', name: 'inspectus',
                                  version: "${project.inspectus4katalon.inspectusVersion}"])
+            // the value of project.inspectus4katalon.inspectusVersion is declared
+            // by the com.kazurayam.inspectus.gradle.KatalonDriversPluginConfiguration class
             add(conf.getName(), [group: 'com.kazurayam', name: 'ExecutionProfilesLoader',
                                  version: "${project.inspectus4katalon.ExecutionProfilesLoaderVersion}"])
         })
