@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'com.kazurayam'
-version = '0.3.4'
+version = '0.4.1'
 
 ext {
     isReleaseVersion = !version.endsWith("SNAPSHOT")
@@ -13,11 +13,6 @@ ext {
 repositories {
     mavenCentral()
     mavenLocal()
-}
-
-java {
-    withSourcesJar()
-    withJavadocJar()
 }
 
 tasks.withType(Test) {
@@ -52,6 +47,8 @@ gradlePlugin {
     // This makes `org.gradle.testkit.runner.GradleRunner` class available to the
     // functionalTest classes.
 
+    website = 'https://kazurayam.github.io/inspectus4katalon-gradle-plugin/'
+    vcsUrl = 'https://github.com/kazurayam/inspectus4katalon-gradle-plugin/'
     plugins {
         inspectus4katalon {
             id = "com.kazurayam.inspectus4katalon"
@@ -59,16 +56,15 @@ gradlePlugin {
             description = "adds 'gradle drivers' task which downloads required jars" +
                     " from the Maven Central repository to locate them into" +
                     " the Drivers folder of a Katalon Studio project"
+            tags.set(["inspectus", "visual-inspection", "katalon-studio", "materialstore"])
             implementationClass = "com.kazurayam.inspectus.gradle.KatalonDriversPlugin"
         }
     }
 }
 
-pluginBundle {
-    // information displayed in the Gradle Plugin Portal
-    website = 'https://kazurayam.github.io/inspectus4katalon-gradle-plugin/'
-    vcsUrl = 'https://github.com/kazurayam/inspectus4katalon-gradle-plugin/'
-    tags = ["inspectus", "visual-inspection", "katalon-studio", "materialstore"]
+// https://docs.gradle.org/current/userguide/publishing_gradle_module_metadata.html#sub:disabling-gmm-publication
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
 }
 
 publishing {

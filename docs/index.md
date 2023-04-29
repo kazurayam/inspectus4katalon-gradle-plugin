@@ -11,7 +11,7 @@ The `inspectus4katalon` is a Gradle plugin that enables a [Katalon Studio](https
 You would want to write the `<Katalon project directory>/build.gradle` like this:
 
     plugins {
-        id "inspectus4katalon"
+        id "inspectus4katalon" version "0.4.0"
     }
 
 ## drivers task
@@ -29,10 +29,10 @@ then the task will download a set of external jar files required for the `inspec
     ├── AUTOIMPORTED_ExecutionProfilesLoader-1.2.1.jar
     ├── AUTOIMPORTED_ashot-1.5.4.jar
     ├── AUTOIMPORTED_freemarker-2.3.31.jar
-    ├── AUTOIMPORTED_inspectus-0.8.1.jar
+    ├── AUTOIMPORTED_inspectus-0.9.0.jar
     ├── AUTOIMPORTED_java-diff-utils-4.11.jar
     ├── AUTOIMPORTED_jsoup-1.14.3.jar
-    └── AUTOIMPORTED_materialstore-0.14.2.jar
+    └── AUTOIMPORTED_materialstore-0.16.0.jar
 
 Please note that the exact version numbers may change in future as the software gets more developed.
 
@@ -50,7 +50,7 @@ The plugin provides one more Gradle task which deploys a set of sample code that
     $ gradle deploy-visual-inspection-sample-for-katalon
 
     > Task :deploy-visual-inspection-sample-for-katalon
-    Downloading https://github.com/kazurayam/inspectus4katalon-sample-project/archive/refs/tags/0.3.2.zip into /Users/kazuakiurayama/github/inspectus4katalon-gradle-plugin/rehearsal/build/tmp/sampleProject.zip
+    Downloading https://github.com/kazurayam/inspectus4katalon-sample-project/archive/refs/tags/0.4.0.zip into /Users/kazuakiurayama/github/inspectus4katalon-gradle-plugin/rehearsal/build/tmp/sampleProject.zip
     ... Test Cases/CURA/run_materialize.tc
     ... Test Cases/CURA/main.tc
     ... Test Cases/CURA/materialize.tc
@@ -90,7 +90,7 @@ The plugin provides one more Gradle task which deploys a set of sample code that
     ... Profiles/MyAdmin_DevelopmentEnv.glbl
     ... Profiles/CURA_DevelopmentEnv.glbl
     ... Profiles/MyAdmin_ProductionEnv.glbl
-    deployed the sample project v0.3.2
+    deployed the sample project v0.4.0
 
     BUILD SUCCESSFUL in 33s
 
