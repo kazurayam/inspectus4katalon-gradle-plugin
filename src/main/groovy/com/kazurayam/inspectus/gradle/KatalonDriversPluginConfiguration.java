@@ -2,7 +2,7 @@ package com.kazurayam.inspectus.gradle;
 
 public class KatalonDriversPluginConfiguration {
 
-    public String inspectusVersion = "0.10.1";
+    public String inspectusVersion = "0.10.2";
 
     public String ExecutionProfilesLoaderVersion = "2.1.0";
 
