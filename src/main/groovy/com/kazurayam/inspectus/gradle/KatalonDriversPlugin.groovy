@@ -72,7 +72,8 @@ class KatalonDriversPlugin implements Plugin<Project> {
                                     "**/ashot*.jar",
                                     "**/jsoup*.jar",
                                     "**/java-diff-utils*.jar",
-                                    "**/freemarker*.jar"
+                                    "**/freemarker*.jar",
+                                    "**/TestObjectExtension*.jar"
                         )
                         .eachFile({ fileCopyDetails -> println fileCopyDetails.getName()})
                         .rename({ s ->
