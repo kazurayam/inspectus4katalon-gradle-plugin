@@ -47,6 +47,7 @@ class KatalonDriverPluginFunctionalTest extends Specification {
         result.output.contains("jsoup")
         result.output.contains("freemarker")
         result.output.contains("java-diff-utils")
+        result.output.contains("TestObjectExtension")
         result.task(":drivers").outcome == SUCCESS
     }
 
