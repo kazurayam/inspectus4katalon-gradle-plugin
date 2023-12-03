@@ -45,6 +45,8 @@ class KatalonDriversPlugin implements Plugin<Project> {
             // by the com.kazurayam.inspectus.gradle.KatalonDriversPluginConfiguration class
             add(conf.getName(), [group: 'com.kazurayam', name: 'ExecutionProfilesLoader',
                                  version: "${project.inspectus4katalon.ExecutionProfilesLoaderVersion}"])
+            add(conf.getName(), [group: 'com.kazurayam', name: 'TestObjectExtension',
+                    version: "${project.inspectus4katalon.TestObjectExtensionVersion}"])
         })
 
         /*
@@ -58,7 +60,6 @@ class KatalonDriversPlugin implements Plugin<Project> {
                 }
             }
             doLast {
-
                 project.copy { copySpec ->
                     copySpec
                         .from(conf)
