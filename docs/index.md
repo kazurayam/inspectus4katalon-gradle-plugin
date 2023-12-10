@@ -1,3 +1,6 @@
+- Table of contents
+{:toc}
+
 # inspectus4katalon, a Gradle plugin
 
 -   back to the [repository](https://github.com/kazurayam/inspectus4katalon-gradle-plugin)
@@ -11,7 +14,7 @@ The `inspectus4katalon` is a Gradle plugin that enables a [Katalon Studio](https
 You would want to write the `<Katalon project directory>/build.gradle` like this:
 
     plugins {
-        id "inspectus4katalon" version "0.4.0"
+        id "com.kazurayam.inspectus4katalon" version "0.5.4"
     }
 
 ## drivers task
