@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a075581-761f-449f-9fd2-7526ed96a1ca" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/functionalTest/groovy/com/kazurayam/inspectus/gradle/KatalonDriverPluginFunctionalTest.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/functionalTest/groovy/com/kazurayam/inspectus/gradle/KatalonDriverPluginFunctionalTest.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/kazurayam/inspectus/gradle/KatalonDriversPlugin.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/kazurayam/inspectus/gradle/KatalonDriversPlugin.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/kazurayam/inspectus/gradle/KatalonDriversPluginConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/kazurayam/inspectus/gradle/KatalonDriversPluginConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/groovy/com/kazurayam/inspectus/gradle/KatalonDriversPluginConfigurationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/groovy/com/kazurayam/inspectus/gradle/KatalonDriversPluginConfigurationTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +23,9 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -131,6 +134,7 @@
       <updated>1701521757727</updated>
       <workItem from="1701521758946" duration="911000" />
       <workItem from="1701606333432" duration="2075000" />
+      <workItem from="1702194813435" duration="221000" />
     </task>
     <servers />
   </component>
