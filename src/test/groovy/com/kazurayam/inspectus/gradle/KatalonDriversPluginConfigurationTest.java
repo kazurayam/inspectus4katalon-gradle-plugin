@@ -20,7 +20,7 @@ public class KatalonDriversPluginConfigurationTest {
     @Test
     public void test_TestObjectExtensionVersion() {
         KatalonDriversPluginConfiguration config = new KatalonDriversPluginConfiguration();
-        assertEquals("0.1.2", config.TestObjectExtensionVersion);
+        assertEquals("0.1.3", config.TestObjectExtensionVersion);
     }
 
     @Test
