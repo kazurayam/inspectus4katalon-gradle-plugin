@@ -13,7 +13,7 @@ You would want to write the `<Katalon project directory>/build.gradle` like this
 [source,text]
 ----
 plugins {
-    id "inspectus4katalon" version "0.4.0"
+    id "com.kazurayam.inspectus4katalon" version "0.5.4"
 }
 ----
 
