@@ -2,7 +2,7 @@ plugins {
     id("com.gradle.enterprise") version("3.9")
 }
 
-rootProject.name = "inspectus4katalonImpl"
+rootProject.name = "inspectus4katalon-gradle-plugin"
 
 dependencyResolutionManagement {
     versionCatalogs {
