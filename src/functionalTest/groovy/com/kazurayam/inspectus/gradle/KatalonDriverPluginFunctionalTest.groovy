@@ -28,7 +28,7 @@ class KatalonDriverPluginFunctionalTest extends Specification {
         /*
         buildFile << """
            drivers {
-               inspectusVersion = "0.8.2"
+               inspectusVersion = "0.12.5"
            }
         """
          */
@@ -55,7 +55,7 @@ class KatalonDriverPluginFunctionalTest extends Specification {
         /*
         buildFile << """
            drivers {
-               inspectusVersion = "0.8.2"
+               inspectusVersion = "0.12.5"
            }
         """
          */

@@ -8,7 +8,7 @@ public class KatalonDriversPluginConfigurationTest {
     @Test
     public void test_inspectusVersion() {
         KatalonDriversPluginConfiguration config = new KatalonDriversPluginConfiguration();
-        assertEquals("0.12.4", config.inspectusVersion);
+        assertEquals("0.12.5", config.inspectusVersion);
     }
 
     @Test
@@ -20,7 +20,7 @@ public class KatalonDriversPluginConfigurationTest {
     @Test
     public void test_sampleProjectVersion() {
         KatalonDriversPluginConfiguration config = new KatalonDriversPluginConfiguration();
-        assertEquals("0.6.1", config.sampleProjectVersion);
+        assertEquals("0.6.0", config.sampleProjectVersion);
     }
 
 
